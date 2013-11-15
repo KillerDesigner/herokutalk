@@ -1,0 +1,21 @@
+
+<%= render 'home/signin' %>
+
+<div id ="pins">
+<% @text_pins.each do |pin| %>
+  <div class="box">
+    <p>
+    <strong>
+      <%= pin.title %>
+      </strong>
+      </p>
+      <p class="description">
+      <%= pin.content %>
+      </p>
+
+          Posted by <%= pin.user.email %>
+
+  </div>
+
+<% end %>
+</div>

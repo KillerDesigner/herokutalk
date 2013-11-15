@@ -1,0 +1,58 @@
+<h1>Welcome to your profile</h1>
+
+<%= image_tag @user.avatar.url, :class => "img-circle", :height => "100px", :width => "100px" %></br>
+
+<div id="upload-profile">
+  <p>upload a profile photo</p>
+</div>
+
+<div id="upload-form">
+  <%= form_for @user, url:{ action: "update" } , :html => { :multipart => true } do |form| %>
+  <%= form.file_field :avatar %>
+  <%= form.submit %>
+  <% end %>
+</div>
+
+<%= @user.email %></br>
+<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+  Create a board
+</button>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <%= render :partial => 'form' %>
+        </div>
+      <div class="modal-footer">
+        <button type="button"id="closeModal" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="pins">
+  <div id="new-boards">
+  </div>
+</div>
+
+<div id="pins">
+  <div id="user-boards">
+    <% @boards.each do |board| %>
+      <div id="<%= board.id %>" class="box">
+        <h3><a href="/boards/<%= board.id %>"><%= board.title %></a></h3>
+        <hr>
+        <p>User on the board:<p>
+        <% board.users.each do |user| %>
+          <%= image_tag user.avatar.url, :id => "avatar"%>
+           <% end %>
+        <button data-id="<%= board.id  %>" data-method="delete">Delete</button>
+      </div>
+      <% end %>
+  </div>
+</div>
+

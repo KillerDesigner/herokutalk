@@ -1,0 +1,28 @@
+<p>
+  <%=image_tag @pin.image(:medium) %>
+  <b>Description:</b>
+  <%= @pin.description %>
+  <%= @pin.user.email %>
+</p>
+<p>
+  <% @comments.each do |comment| %>
+    <p>
+    <strong><%= User.find(comment.user_id).id %></strong>: <%= comment.content %>
+    </p>
+  <% end %>
+</p>
+
+<%= form_for @comment do |f| %>
+  <%= f.text_area :content, placeholder: "Enter Comment Here" %>
+  <%= f.hidden_field :commentable_type, value: "Pin" %>
+  <%= f.hidden_field :commentable_id, value: @pin.id %>
+  <%= f.hidden_field :board_id, value: @board %>
+  <%= f.submit %>
+<% end %>
+
+<% if current_user == @pin.user %>
+<%= link_to 'Edit', edit_board_pin_path(@board) %> |
+<% end %>
+<%= link_to 'Back', board_path(@board) %>
+
+<br><br>
